@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import Tab from './Tab';
+import Tab from '../components/Tab';
+import GenerateForm from '../components/Generate.form';
+
 import '../styles/index.css'
 
 export default () => {
@@ -13,6 +15,9 @@ export default () => {
                     <Tab name="generate" active={selectedTab} label="Generate" onSelect={setSelectedTab} />
                     <Tab name="retrieve" active={selectedTab} label="Retrieve" onSelect={setSelectedTab} />
                 </ul>
+                <div className="w-full pt-4">
+                    {selectedTab === 'generate' && <GenerateForm />}
+                </div>
             </div>
         </div>
     );
