@@ -7,6 +7,8 @@ import '../styles/index.css'
 
 export default () => {
     const [selectedTab, setSelectedTab] = useState('generate');
+    const [response, setResponse] = useState('');
+    const [error, setError] = useState('');
 
     return (
         <div className="flex h-screen justify-center items-center">
@@ -18,12 +20,12 @@ export default () => {
                             <Tab name="generate" active={selectedTab} label="Generate" onSelect={setSelectedTab} />
                             <Tab name="retrieve" active={selectedTab} label="Retrieve" onSelect={setSelectedTab} />
                         </ul>
-                        {selectedTab === 'generate' && <GenerateForm />}
-                        {selectedTab === 'retrieve' && <RetrieveForm />}
+                        {selectedTab === 'generate' && <GenerateForm onResponse={setResponse} onError={setError} />}
+                        {selectedTab === 'retrieve' && <RetrieveForm onResponse={setResponse} onError={setError} />}
                     </div>
                     <div className="w-full pl-2">
                         <h2 className="text-base font-semibold">Results</h2>
-                        <textarea className="w-full h-56 border" style={{ resize: 'none' }} readOnly />
+                        <textarea className="w-full h-56 border font-mono" style={{ resize: 'none' }} readOnly value={response ? JSON.stringify(response, null, 4) : ''} />
                     </div>
                 </div>
             </div>
