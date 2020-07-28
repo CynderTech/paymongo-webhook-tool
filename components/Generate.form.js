@@ -1,8 +1,34 @@
 import { useState } from 'react';
+import client from '../lib/api';
 
-export default () => {
+export default ({ onResponse, onError }) => {
     const [webhookUrl, setWebhookUrl] = useState('');
     const [secretKey, setSecretKey] = useState('');
+
+    async function generateWebhook() {
+        const payload = {
+            data: {
+                attributes: {
+                    events: ['source.chargeable'],
+                    url: webhookUrl,
+                },
+            },
+        };
+
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${btoa(secretKey)}`,
+        };
+
+        try {
+            const { data: responseData } = await client.post('/webhooks', payload, { headers });
+
+            onResponse(responseData);
+        } catch (err) {
+            onError(err);
+        }
+    }
 
     return (
         <form>
@@ -26,7 +52,10 @@ export default () => {
                     onChange={e => setSecretKey(e.target.value)}
                 />
             </div>
-            <button className="mt-4 p-2 w-full rounded bg-orange-600 text-white font-semibold" type="button">
+            <button
+                className="mt-4 p-2 w-full rounded bg-orange-600 text-white font-semibold"
+                type="button"
+                onClick={generateWebhook}>
                 Generate
             </button>
         </form>
