@@ -1,10 +1,16 @@
 import { useState } from 'react';
+import Button from './Button';
 import client from '../lib/api';
+import parseError from '../lib/errors';
 
-export default ({ onResponse, onError }) => {
+export default ({ loading, onResponse, onError, setLoading }) => {
     const [secretKey, setSecretKey] = useState('');
 
     async function retrieveWebhooks() {
+        onError([]);
+        setLoading(true);
+        onResponse({})
+
         const headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -16,7 +22,9 @@ export default ({ onResponse, onError }) => {
 
             onResponse(responseData);
         } catch (err) {
-            onError(err);
+            onError(parseError(err));
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -32,12 +40,7 @@ export default ({ onResponse, onError }) => {
                     onChange={e => setSecretKey(e.target.value)}
                 />
             </div>
-            <button
-                className="mt-4 p-2 w-full rounded bg-orange-600 text-white font-semibold"
-                type="button"
-                onClick={retrieveWebhooks}>
-                Retrieve Webhooks
-            </button>
+            <Button label="Retrieve Webhooks" loading={loading} disabled={loading} onClick={retrieveWebhooks} />
         </form>
     );
 }
