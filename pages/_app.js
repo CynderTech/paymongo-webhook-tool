@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Tab from '../components/Tab';
 import GenerateForm from '../components/Generate.form';
 import RetrieveForm from '../components/Retrieve.form';
@@ -9,13 +9,27 @@ import fakedata from '../fakedata.json';
 import '../styles/index.css'
 
 export default () => {
-    const [selectedTab, setSelectedTab] = useState('retrieve');
-    const [response, setResponse] = useState({});
+    const [selectedTab, setSelectedTab] = useState('generate');
+    const [webhooks, setWebhooks] = useState([]);
     const [errors, setErrors] = useState([]);
     const [showRaw, setShowRaw] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const hasData = Object.keys(response).length > 0;
+    function resetWebhooksAndErrors() {
+        setWebhooks({});
+        setErrors([]);
+    }
+
+    useEffect(() => {
+        resetWebhooksAndErrors();
+    }, [selectedTab]);
+
+    useEffect(() => {
+        if (loading) {
+            resetWebhooksAndErrors();
+        }
+    }, [loading]);
+
     const hasErrors = errors.length > 0;
 
     return (
@@ -31,8 +45,8 @@ export default () => {
                         {
                             selectedTab === 'generate' &&
                                 <GenerateForm
-                                    onResponse={setResponse}
-                                    onError={setErrors}
+                                    setWebhooks={setWebhooks}
+                                    setErrors={setErrors}
                                     loading={loading}
                                     setLoading={setLoading}
                                 />
@@ -40,8 +54,8 @@ export default () => {
                         {
                             selectedTab === 'retrieve' &&
                                 <RetrieveForm
-                                    onResponse={setResponse}
-                                    onError={setErrors}
+                                    setWebhooks={setWebhooks}
+                                    setErrors={setErrors}
                                     loading={loading}
                                     setLoading={setLoading}
                                 />
@@ -78,8 +92,8 @@ export default () => {
                                 </div>
                         }
                         {
-                            selectedTab === 'retrieve' && hasData && !showRaw && !hasErrors &&
-                                <WebhooksList data={response.data} />
+                            webhooks.length > 0 && !showRaw && !hasErrors &&
+                                <WebhooksList data={webhooks} />
                         }
                         {
                             showRaw && !hasErrors &&

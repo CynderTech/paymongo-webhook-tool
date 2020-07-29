@@ -1,11 +1,15 @@
 import { useState } from 'react';
+import Button from './Button';
 import client from '../lib/api';
+import parseError from '../lib/errors';
 
-export default ({ onResponse, onError }) => {
+export default ({ loading, setWebhooks, setErrors, setLoading }) => {
     const [webhookUrl, setWebhookUrl] = useState('');
     const [secretKey, setSecretKey] = useState('');
 
     async function generateWebhook() {
+        setLoading(true);
+
         const payload = {
             data: {
                 attributes: {
@@ -24,9 +28,11 @@ export default ({ onResponse, onError }) => {
         try {
             const { data: responseData } = await client.post('/webhooks', payload, { headers });
 
-            onResponse(responseData);
+            setWebhooks([responseData.data]);
         } catch (err) {
-            onError(err);
+            setErrors(parseError(err));
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -52,12 +58,7 @@ export default ({ onResponse, onError }) => {
                     onChange={e => setSecretKey(e.target.value)}
                 />
             </div>
-            <button
-                className="mt-4 p-2 w-full rounded bg-orange-600 text-white font-semibold"
-                type="button"
-                onClick={generateWebhook}>
-                Generate
-            </button>
+            <Button label="Generate Webhook" loading={loading} disabled={loading} onClick={generateWebhook} />
         </form>
     )
 }

@@ -3,13 +3,11 @@ import Button from './Button';
 import client from '../lib/api';
 import parseError from '../lib/errors';
 
-export default ({ loading, onResponse, onError, setLoading }) => {
+export default ({ loading, setWebhooks, setErrors, setLoading }) => {
     const [secretKey, setSecretKey] = useState('');
 
     async function retrieveWebhooks() {
-        onError([]);
         setLoading(true);
-        onResponse({})
 
         const headers = {
             'Accept': 'application/json',
@@ -20,9 +18,9 @@ export default ({ loading, onResponse, onError, setLoading }) => {
         try {
             const { data: responseData } = await client.get('/webhooks', { headers });
 
-            onResponse(responseData);
+            setWebhooks(responseData.data);
         } catch (err) {
-            onError(parseError(err));
+            setErrors(parseError(err));
         } finally {
             setLoading(false);
         }
