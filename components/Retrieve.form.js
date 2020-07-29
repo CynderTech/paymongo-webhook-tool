@@ -3,7 +3,7 @@ import Button from './Button';
 import client from '../lib/api';
 import parseError from '../lib/errors';
 
-export default ({ loading, setWebhooks, setErrors, setLoading }) => {
+export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) => {
     const [secretKey, setSecretKey] = useState('');
 
     async function retrieveWebhooks() {
@@ -18,6 +18,7 @@ export default ({ loading, setWebhooks, setErrors, setLoading }) => {
         try {
             const { data: responseData } = await client.get('/webhooks', { headers });
 
+            setResponse(responseData);
             setWebhooks(responseData.data);
         } catch (err) {
             setErrors(parseError(err));

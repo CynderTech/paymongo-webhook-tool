@@ -3,7 +3,7 @@ import Button from './Button';
 import client from '../lib/api';
 import parseError from '../lib/errors';
 
-export default ({ loading, setWebhooks, setErrors, setLoading }) => {
+export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) => {
     const [webhookUrl, setWebhookUrl] = useState('');
     const [secretKey, setSecretKey] = useState('');
 
@@ -28,6 +28,7 @@ export default ({ loading, setWebhooks, setErrors, setLoading }) => {
         try {
             const { data: responseData } = await client.post('/webhooks', payload, { headers });
 
+            setResponse(responseData);
             setWebhooks([responseData.data]);
         } catch (err) {
             setErrors(parseError(err));

@@ -10,6 +10,7 @@ import '../styles/index.css'
 
 export default () => {
     const [selectedTab, setSelectedTab] = useState('generate');
+    const [response, setResponse] = useState({});
     const [webhooks, setWebhooks] = useState([]);
     const [errors, setErrors] = useState([]);
     const [showRaw, setShowRaw] = useState(false);
@@ -31,6 +32,7 @@ export default () => {
     }, [loading]);
 
     const hasErrors = errors.length > 0;
+    const hasResponse = Object.keys(response).length > 0;
 
     return (
         <div className="flex h-screen justify-center items-center">
@@ -45,6 +47,7 @@ export default () => {
                         {
                             selectedTab === 'generate' &&
                                 <GenerateForm
+                                    setResponse={setResponse}
                                     setWebhooks={setWebhooks}
                                     setErrors={setErrors}
                                     loading={loading}
@@ -54,6 +57,7 @@ export default () => {
                         {
                             selectedTab === 'retrieve' &&
                                 <RetrieveForm
+                                    setResponse={setResponse}
                                     setWebhooks={setWebhooks}
                                     setErrors={setErrors}
                                     loading={loading}
@@ -63,12 +67,15 @@ export default () => {
                     </div>
                     <div className="w-full pl-2">
                         <h2 className="text-base font-semibold pt-4 float-left">Results</h2>
-                        <a
-                            href="#"
-                            className="pt-4 float-right text-base font-semibold text-blue-500 hover:text-blue-700"
-                            onClick={() => setShowRaw(!showRaw)}>
-                                {showRaw ? 'View Data' : 'View Raw Response'}
-                        </a>
+                        {
+                            webhooks.length > 0 && 
+                                <a
+                                    href="#"
+                                    className="pt-4 float-right text-base font-semibold text-blue-500 hover:text-blue-700"
+                                    onClick={() => setShowRaw(!showRaw)}>
+                                        {showRaw ? 'View Data' : 'View Raw Response'}
+                                </a>
+                        }
                         <span className="clearfix" />
                         {
                             loading &&
@@ -96,12 +103,12 @@ export default () => {
                                 <WebhooksList data={webhooks} />
                         }
                         {
-                            showRaw && !hasErrors &&
+                            hasResponse && showRaw && !hasErrors &&
                                 <textarea
                                     className="w-full h-56 border font-mono"
                                     style={{ resize: 'none' }}
                                     readOnly
-                                    value={hasData ? JSON.stringify(response, null, 4) : ''}
+                                    value={hasResponse ? JSON.stringify(response, null, 4) : ''}
                                 />
                         }
                     </div>
