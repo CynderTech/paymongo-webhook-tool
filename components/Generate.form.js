@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Button from './Button';
 import client from '../lib/api';
@@ -8,8 +8,12 @@ export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) =>
     const router = useRouter();
     const { query } = router;
 
-    const [webhookUrl, setWebhookUrl] = useState(query.url || '');
+    const [webhookUrl, setWebhookUrl] = useState('');
     const [secretKey, setSecretKey] = useState('');
+
+    useEffect(() => {
+        setWebhookUrl(query.url);
+    }, [query.url]);
 
     async function generateWebhook() {
         setLoading(true);
