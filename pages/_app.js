@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Tab from '../components/Tab';
 import GenerateForm from '../components/Generate.form';
 import RetrieveForm from '../components/Retrieve.form';
+import UpdateForm from '../components/Update.form';
 import WebhooksList from '../components/WebhooksList';
 import Loader from '../components/Loader';
 
@@ -47,6 +48,7 @@ export default () => {
                             <ul className="flex border-b pt-4">
                                 <Tab name="generate" active={selectedTab} label="Generate" onSelect={setSelectedTab} />
                                 <Tab name="retrieve" active={selectedTab} label="Retrieve" onSelect={setSelectedTab} />
+                                <Tab name="update" active={selectedTab} label="Update" onSelect={setSelectedTab} />
                             </ul>
                             {
                                 selectedTab === 'generate' &&
@@ -61,6 +63,16 @@ export default () => {
                             {
                                 selectedTab === 'retrieve' &&
                                     <RetrieveForm
+                                        setResponse={setResponse}
+                                        setWebhooks={setWebhooks}
+                                        setErrors={setErrors}
+                                        loading={loading}
+                                        setLoading={setLoading}
+                                    />
+                            }
+                            {
+                                selectedTab === 'update' &&
+                                    <UpdateForm
                                         setResponse={setResponse}
                                         setWebhooks={setWebhooks}
                                         setErrors={setErrors}

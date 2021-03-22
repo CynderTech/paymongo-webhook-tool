@@ -21,7 +21,7 @@ export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) =>
         const payload = {
             data: {
                 attributes: {
-                    events: ['source.chargeable'],
+                    events: ['source.chargeable', 'payment.paid', 'payment.failed'],
                     url: webhookUrl,
                 },
             },
