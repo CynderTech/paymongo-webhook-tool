@@ -1,5 +1,5 @@
 const WebhooksList = ({ data }) => (
-    <div className="h-64 overflow-y-scroll">
+    <div className="h-64 overflow-y-scroll clear-both">
         {data.map(({ attributes, id }) => {
             const { url, secret_key: secretKey, status } = attributes;
 
