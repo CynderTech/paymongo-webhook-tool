@@ -10,11 +10,13 @@
   "dependencies": {
     "axios": "^0.19.2",
     "lodash": "^4.17.21",
-    "next": "11",
+    "next": "12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "eslint": "8.21.0",
+    "eslint-config-next": "12.2.3",
     "postcss-preset-env": "^6.7.0",
     "tailwindcss": "^1.6.0"
   }
