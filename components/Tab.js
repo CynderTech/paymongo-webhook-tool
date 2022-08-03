@@ -1,4 +1,4 @@
-export default ({ active: _active, label, name, onSelect }) => {
+const Tab = ({ active: _active, label, name, onSelect }) => {
     const active = _active === name;
     const textColorPrefix = 'text-blue';
     const textColor = `${textColorPrefix}-${active ? '700' : '500'}`;
@@ -18,3 +18,5 @@ export default ({ active: _active, label, name, onSelect }) => {
         </li>
     );
 }
+
+export default Tab;

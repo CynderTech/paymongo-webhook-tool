@@ -4,7 +4,7 @@ import Button from './Button';
 import client from '../lib/api';
 import parseError from '../lib/errors';
 
-export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) => {
+const UpdateForm = ({ loading, setResponse, setWebhooks, setErrors, setLoading }) => {
     const [secretKey, setSecretKey] = useState('');
     const [webhookId, setWebhookId] = useState('');
 
@@ -62,4 +62,6 @@ export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) =>
             <Button label="Update Webhook" loading={loading} disabled={loading} onClick={updateWebhook} />
         </form>
     );
-}
+};
+
+export default UpdateForm;

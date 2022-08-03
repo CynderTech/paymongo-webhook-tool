@@ -1,4 +1,4 @@
-export default ({ data }) => (
+const WebhooksList = ({ data }) => (
     <div className="h-64 overflow-y-scroll">
         {data.map(({ attributes, id }) => {
             const { url, secret_key: secretKey, status } = attributes;
@@ -28,3 +28,5 @@ export default ({ data }) => (
         })}
     </div>
 );
+
+export default WebhooksList;

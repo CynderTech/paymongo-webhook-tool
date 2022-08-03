@@ -4,7 +4,7 @@ import Button from './Button';
 import client from '../lib/api';
 import parseError from '../lib/errors';
 
-export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) => {
+const RetrieveForm = ({ loading, setResponse, setWebhooks, setErrors, setLoading }) => {
     const [secretKey, setSecretKey] = useState('');
     const [showEnabled, setShowEnabled] = useState(true);
 
@@ -63,4 +63,6 @@ export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) =>
             <Button label="Retrieve Webhooks" loading={loading} disabled={loading} onClick={retrieveWebhooks} />
         </form>
     );
-}
+};
+
+export default RetrieveForm;

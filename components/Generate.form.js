@@ -4,7 +4,7 @@ import Button from './Button';
 import client from '../lib/api';
 import parseError from '../lib/errors';
 
-export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) => {
+const GenerateForm = ({ loading, setResponse, setWebhooks, setErrors, setLoading }) => {
     const router = useRouter();
     const { query } = router;
 
@@ -70,4 +70,6 @@ export default ({ loading, setResponse, setWebhooks, setErrors, setLoading }) =>
             <Button label="Generate Webhook" loading={loading} disabled={loading} onClick={generateWebhook} />
         </form>
     )
-}
+};
+
+export default GenerateForm;

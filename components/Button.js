@@ -1,6 +1,6 @@
 import ButtonLoader from './ButtonLoader';
 
-export default ({ disabled, label, loading, onClick }) => {
+const Button = ({ disabled, label, loading, onClick }) => {
     let classes = "mt-4 p-2 w-full rounded bg-orange-600 text-white text-center font-semibold";
 
     if (disabled) {
@@ -18,4 +18,6 @@ export default ({ disabled, label, loading, onClick }) => {
             }
         </button>
     );
-}
+};
+
+export default Button;

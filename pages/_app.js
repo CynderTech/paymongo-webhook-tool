@@ -9,7 +9,7 @@ import Loader from '../components/Loader';
 
 import '../styles/index.css'
 
-export default () => {
+const App = () => {
     const [selectedTab, setSelectedTab] = useState('generate');
     const [response, setResponse] = useState({});
     const [webhooks, setWebhooks] = useState([]);
@@ -133,4 +133,6 @@ export default () => {
             </div>
         </div>
     );
-}
+};
+
+export default App;
