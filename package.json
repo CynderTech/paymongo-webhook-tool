@@ -8,7 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "0.21.2",
     "lodash": "^4.17.21",
     "next": "12",
     "react": "^18.2.0",
